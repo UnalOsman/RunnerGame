@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class character : MonoBehaviour
 {
-    int hiz=10;
+
+    Rigidbody rb;
+
+    bool havadami = false;
+    int hiz=3;
+
+
 
     void Start()
     {
+        rb= GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -18,17 +25,38 @@ public class character : MonoBehaviour
 
     public void Hareket()
     {
-        transform.position =new Vector3(transform.position.x,transform.position.y,transform.position.z*hiz*Time.deltaTime);
+
+        transform.Translate(new Vector3(0,0,hiz*Time.deltaTime));
 
 
-        if(Input.GetKeyDown(KeyCode.UpArrow))
+        
+
+        if(havadami==false)
         {
-            transform.position=new Vector3(transform.position.x,transform.position.y + 0.62f,transform.position.z);
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                rb.velocity=new Vector3 (0,600f*Time.deltaTime,0);
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+
+            }
         }
-        if(Input.GetKeyDown(KeyCode.DownArrow))
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.collider.CompareTag("floor"))
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.14f, transform.position.z);
-            transform.Rotate(new Vector3(transform.rotation.x - 80f,transform.rotation.y,transform.rotation.z),1f);
+            havadami= false;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if(collision.collider.CompareTag("floor"))
+        {
+            havadami = true;
         }
     }
 
