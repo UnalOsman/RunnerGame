@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - floor
+  - engel
+  - ziplananEngel
+  - ileri1
+  - ileri2
   layers:
   - Default
   - TransparentFX
