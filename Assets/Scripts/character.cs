@@ -5,12 +5,12 @@ using UnityEngine;
 public class character : MonoBehaviour
 {
     public GameObject Base1;
+    public GameObject Base2;
     Rigidbody rb;
 
     bool havadami = false;
-    int hiz=3;
-    Vector3 konum = Vector3.zero;
-
+    float hiz=4f;
+    bool sag = false;
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class character : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Hareket();
     }
@@ -26,35 +26,41 @@ public class character : MonoBehaviour
     public void Hareket()
     {
 
-        transform.Translate(new Vector3(0,0,hiz*Time.deltaTime));
+        
 
         if (havadami == false)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {
-                rb.velocity = new Vector3(0, 500f * Time.deltaTime, 0);
+                rb.AddForce(Vector3.up * 4f, ForceMode.Impulse);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
 
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            if (transform.position.x < 1.55f)
-            {
-                transform.position = new Vector3(transform.position.x + 1.55f, transform.position.y, transform.position.z);
-            }
+             sag = true;
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            if (transform.position.x > -1.55f)
-            {
-                transform.position = new Vector3(transform.position.x - 1.55f, transform.position.y, transform.position.z);
-            }
+            sag= false;
         }
 
+
+        if(sag)
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(1.5f, transform.position.y,
+                transform.position.z),Time.deltaTime*3f);
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(-0.5f, transform.position.y,
+                transform.position.z), Time.deltaTime * 3f);
+        }
+        transform.Translate(0, 0, hiz * Time.deltaTime);
     }
 
 
@@ -76,20 +82,7 @@ public class character : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("ileri2"))
-        {
-            if(Base1.transform.position.z==33)
-            {
-                Base1.GetComponent<Transform>().transform.position = new Vector3( Base1.transform.position.x,Base1.transform.position.y, -26.82f);
-            }
-            else
-            {
-                Base1.GetComponent<Transform>().transform.position = new Vector3(Base1.transform.position.x,Base1.transform.position.y, 33f);
-            }
-        }
-    }
+    
 
     private void OnCollisionStay(Collision collision)
     {
