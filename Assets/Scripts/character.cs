@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class character : MonoBehaviour
 {
-    public GameObject Base1;
-    public GameObject Base2;
     Rigidbody rb;
-
+    Animator anim;
     bool havadami = false;
-    float hiz=4f;
+    float hiz=2f;
     bool sag = false;
 
     void Start()
     {
         rb= GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,17 +26,20 @@ public class character : MonoBehaviour
     public void Hareket()
     {
 
-        
+        rb.MovePosition(rb.velocity);
 
         if (havadami == false)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             {
+                
                 rb.AddForce(Vector3.up * 4f, ForceMode.Impulse);
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
 
+                anim.SetTrigger("up");
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            {
+                anim.SetTrigger("down");
             }
         }
         
@@ -60,7 +63,6 @@ public class character : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, new Vector3(-0.5f, transform.position.y,
                 transform.position.z), Time.deltaTime * 3f);
         }
-        transform.Translate(0, 0, hiz * Time.deltaTime);
     }
 
 
