@@ -5,102 +5,80 @@ using UnityEngine;
 
 public class character : MonoBehaviour
 {
-    Rigidbody rb;
     Animator anim;
-    bool havadami = false;
-    float hiz=2f;
-    bool sag = false;
 
-    void Start()
+    Rigidbody rb;
+    float speed;
+    float jumpSpeed;
+    float gravitScale;
+    float slideSpeed;
+    int laneIndex;
+    bool isWaiting = false;
+
+    private void Awake()
     {
-        rb= GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>(); 
+        speed = 200f;
+        jumpSpeed = 50f;
+        gravitScale = 800f;
+        slideSpeed = 150f;
+        laneIndex = 0;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        Hareket();
+
+        rb.AddForce(Physics.gravity * gravitScale * Time.deltaTime, ForceMode.Acceleration);
+        jump();
+        yanYon();
     }
 
-    public void Hareket()
+    private void FixedUpdate()
     {
+        rb.AddForce(Vector3.forward * speed, ForceMode.Force);
 
-        rb.MovePosition(rb.velocity);
+    }
 
-        if (havadami == false)
+
+    void jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0f)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+            anim.SetTrigger("up");
+        }
+    }
+
+    void yanYon()
+    {
+        if (!isWaiting) // Eðer bekleme iþlemi yoksa, yeni bir bekleme iþlemi baþlat
+        {
+            if (Input.GetKeyDown(KeyCode.A))
             {
-                
-                rb.AddForce(Vector3.up * 4f, ForceMode.Impulse);
-
-                anim.SetTrigger("up");
+                if (laneIndex != 1)
+                {
+                    rb.AddForce(Vector3.left * slideSpeed, ForceMode.Impulse);
+                    laneIndex++;
+                    StartCoroutine(WaitForSecondsCoroutine(0.1f)); // Bekleme iþlemi baþlat
+                }
             }
-            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            else if (Input.GetKeyDown(KeyCode.D))
             {
-                anim.SetTrigger("down");
+                if (laneIndex != -1)
+                {
+                    rb.AddForce(Vector3.right * slideSpeed, ForceMode.Impulse);
+                    laneIndex--;
+                    StartCoroutine(WaitForSecondsCoroutine(0.1f)); // Bekleme iþlemi baþlat
+                }
             }
         }
-        
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-        {
-             sag = true;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-        {
-            sag= false;
-        }
-
-
-        if(sag)
-        {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(1.5f, transform.position.y,
-                transform.position.z),Time.deltaTime*3f);
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(-0.5f, transform.position.y,
-                transform.position.z), Time.deltaTime * 3f);
-        }
     }
 
-
-    private void OnTriggerStay(Collider other)
+    IEnumerator WaitForSecondsCoroutine(float duration)
     {
-        if( other.CompareTag("floor") || other.CompareTag("ziplananEngel"))
-        {
-            havadami = false;
-        }
+        isWaiting = true; // Bekleme iþlemi baþladýðýnda bayraðý true yap
+        yield return new WaitForSeconds(duration);
+        isWaiting = false; // Bekleme iþlemi bittiðinde bayraðý false yap
     }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("floor") || other.CompareTag("ziplananEngel"))
-        {
-            havadami = true;
-        }
-    }
-
-
-    
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.collider.CompareTag("floor") || collision.collider.CompareTag("ziplananEngel"))
-        {
-            havadami = false;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.CompareTag("floor") || collision.collider.CompareTag("ziplananEngel"))
-        {
-            havadami = true;
-        }
-    }
-
-
 }
