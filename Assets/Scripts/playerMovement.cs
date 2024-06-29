@@ -9,13 +9,17 @@ public class playerMovement : MonoBehaviour
     public float slideDuration = 1f;
     public float speed = 3f;
     private bool isSliding = false;
-    bool isJumping=false;
+    bool isJumping = false;
     float gravityScale;
 
     int laneIndex;
     public float slideSpeed = 2f;
     bool isWaiting = false;
     Vector3 targetPosition;
+
+    public int hitPoints = 3;
+    public float invisibleDuration = 2f;
+    private bool isInvisible = false;
 
     void Start()
     {
@@ -32,6 +36,8 @@ public class playerMovement : MonoBehaviour
             Debug.LogError("Rigidbody component is missing from the player object.");
         }
 
+
+
         animator.SetBool("IsRunning", true);
         laneIndex = 0;
         gravityScale = 400f;
@@ -41,7 +47,7 @@ public class playerMovement : MonoBehaviour
     void Update()
     {
         rb.AddForce(Physics.gravity * gravityScale * Time.deltaTime, ForceMode.Acceleration);
-        targetPosition += Vector3.forward * speed*Time.deltaTime;
+        targetPosition += Vector3.forward * speed * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.A) && !isWaiting)
         {
             if (laneIndex < 1)
@@ -58,7 +64,7 @@ public class playerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            
+
             Jump();
         }
         if (Input.GetKeyDown(KeyCode.S) && !isSliding)
@@ -66,6 +72,11 @@ public class playerMovement : MonoBehaviour
             StartCoroutine(Slide());
         }
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 3f);
+
+        if (hitPoints <= 0)
+        {
+            Die();
+        }
     }
 
     private void FixedUpdate()
@@ -73,12 +84,22 @@ public class playerMovement : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speed);
     }
 
+    public void HitObstacle()
+    {
+        if (!isInvisible)
+        {
+            hitPoints--;
+            StartCoroutine(Blink());
+            StartCoroutine(TemporaryInvisible());
+        }
+    }
+
     void MoveLeft()
     {
         animator.SetFloat("Direction", -1);
         laneIndex++;
         targetPosition += Vector3.left * slideSpeed;
-        
+
         StartCoroutine(ResetDirection());
         StartCoroutine(WaitForSecondsCoroutine(0.1f)); // Bekleme iþlemi baþlat
     }
@@ -94,7 +115,7 @@ public class playerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (rb.velocity.y==0f && !isJumping)
+        if (rb.velocity.y == 0f && !isJumping)
         {
             isJumping = true;
             animator.SetTrigger("IsJumping");
@@ -112,14 +133,44 @@ public class playerMovement : MonoBehaviour
         isSliding = false;
     }
 
-    
+    private IEnumerator Blink()
+    {
+        Renderer renderer = GetComponentInChildren<Renderer>();
+
+        if(renderer != null)
+        {
+            for (int i = 0; i < 10 ; i++)
+            {
+                renderer.enabled = !renderer.enabled;
+
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        else
+        {
+            Debug.Log("Renderer bulunamadý!");
+        }
+        renderer.enabled = true;
+    }
+
+    private IEnumerator TemporaryInvisible()
+    {
+        isInvisible = true;
+        yield return new WaitForSeconds(invisibleDuration);
+        isInvisible = false;
+    }
+
+    private void Die()
+    {
+        Debug.Log("öldük");
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isJumping = false;
-            
+
         }
     }
 
