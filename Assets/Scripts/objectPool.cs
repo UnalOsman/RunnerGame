@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class ObjectPool : MonoBehaviour
 {
     public GameObject objectPrefab;
     public int poolSize = 10;
@@ -30,12 +30,13 @@ public class NewBehaviourScript : MonoBehaviour
             }
         }
 
-
-
+        return null;
+        /*
         //eðer tüm objeler aktifse yeni nesne oluþtur
         GameObject newObj=Instantiate(objectPrefab);
         newObj.SetActive(false);
         objectPool.Add (newObj);
         return newObj;
+        */
     }
 }

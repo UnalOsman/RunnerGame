@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33106615424291490}
   - component: {fileID: 23842910740286896}
   m_Layer: 0
-  m_Name: SM_PolygonPrototype_Buildings_DoorFrame_01P
+  m_Name: doorFramePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
