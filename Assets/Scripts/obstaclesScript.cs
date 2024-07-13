@@ -17,7 +17,7 @@ public class obstaclesScript : MonoBehaviour
 
     private void Update()
     {
-        if(Vector3.Distance(transform.position, player.position) > deActivisionDistance)
+        if(transform.position.z < player.position.z - deActivisionDistance)
         {
             gameObject.SetActive(false);
         }

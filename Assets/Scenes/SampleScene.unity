@@ -312,7 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b,
     type: 3}
-  poolSize: 10
+  poolSize: 20
 --- !u!4 &296872383
 Transform:
   m_ObjectHideFlags: 0
@@ -894,9 +894,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePool: {fileID: 296872382}
-  spawnPoint: {fileID: 2027762227}
+  player: {fileID: 543197489}
   spawnInterval: 3
-  obstacleDistance: 25
+  obstacleDistance: 50
+  initialObstacles: 10
 --- !u!4 &937594441
 Transform:
   m_ObjectHideFlags: 0
@@ -1102,37 +1103,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 953606212}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2027762226
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2027762227}
-  m_Layer: 0
-  m_Name: SpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2027762227
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2027762226}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 110}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1144,4 +1114,3 @@ SceneRoots:
   - {fileID: 107043496}
   - {fileID: 296872383}
   - {fileID: 937594441}
-  - {fileID: 2027762227}
