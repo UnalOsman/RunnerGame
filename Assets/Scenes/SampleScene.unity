@@ -310,8 +310,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26b8666cbf80a54aafb8c233626a306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b,
-    type: 3}
+  objectPrefabs:
+  - {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
+  - {fileID: 1118085362977378, guid: 5527826a6315a224d850675a730c4f62, type: 3}
+  - {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
+  - {fileID: 1765673748168840, guid: fc6f3424666dfda45bcbadbbf42e5968, type: 3}
   poolSize: 20
 --- !u!4 &296872383
 Transform:

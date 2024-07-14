@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public GameObject objectPrefab;
-    public int poolSize = 10;
+    public List<GameObject> objectPrefabs;
+    public int poolSize = 20;
     private List<GameObject> objectPool;
 
     private void Awake()
@@ -14,7 +14,7 @@ public class ObjectPool : MonoBehaviour
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject obj=Instantiate(objectPrefab);
+            GameObject obj = Instantiate(objectPrefabs[Random.Range(0,objectPrefabs.Count)]);
             obj.SetActive(false);
             objectPool.Add(obj);
         }
@@ -30,13 +30,15 @@ public class ObjectPool : MonoBehaviour
             }
         }
 
-        return null;
-        /*
+        //return null;
+
+
+        
         //eðer tüm objeler aktifse yeni nesne oluþtur
-        GameObject newObj=Instantiate(objectPrefab);
+        GameObject newObj = Instantiate(objectPrefabs[Random.Range(0,objectPrefabs.Count)]);
         newObj.SetActive(false);
         objectPool.Add (newObj);
         return newObj;
-        */
+        
     }
 }

@@ -49,27 +49,37 @@ public class levelManager : MonoBehaviour
 
     void SpawnObstacle(bool initial)
     {
-        GameObject obstacle = obstaclePool.GetPoolObject();
+        int lineObstacleCount = Random.Range(1, 3);
 
-        if(obstacle != null )
+        
+        List<float> xPositions = new List<float> { -31f, -6f, 19f };
+        List<float> chosenXPositions=new List<float>();
+
+        for (int i = 0;i < lineObstacleCount;i++)
         {
-            float[] xPositions = { -31f, -6f, 19f };
+            if (xPositions.Count == 0) break;
 
-            float randomX = xPositions[Random.Range(0, xPositions.Length)];
-
-            float spawnZ=initial ? nextSpawnZ : player.position.z + obstacleDistance * initialObstacles;
-
-            Vector3 spawnPosition = new Vector3(randomX, 0, spawnZ);
-
-            obstacle.transform.position = spawnPosition;
-            obstacle.transform.rotation = Quaternion.identity;
-            obstacle.SetActive(true);
-
-            Debug.Log("Obstacle spawned at " + spawnPosition);
+            float randomX = xPositions[Random.Range(0, xPositions.Count)];
+            chosenXPositions.Add(randomX);
+            xPositions.Remove(randomX);
         }
-        else
+
+
+        foreach (float xPosition in chosenXPositions)
         {
-            Debug.Log("No pooled object available");
+            GameObject obstacle = obstaclePool.GetPoolObject();
+            if (obstacle != null)
+            {
+                float spawnZ = initial ? nextSpawnZ : player.position.z + obstacleDistance * initialObstacles;
+                Vector3 spawnPos = new Vector3(xPosition,0,spawnZ);
+                obstacle.transform.position = spawnPos;
+                obstacle.transform.rotation = Quaternion.identity;
+                obstacle.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("No pooled object available");
+            }
         }
     }
 
