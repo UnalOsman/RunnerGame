@@ -312,10 +312,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefabs:
   - {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
-  - {fileID: 1118085362977378, guid: 5527826a6315a224d850675a730c4f62, type: 3}
-  - {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
-  - {fileID: 1765673748168840, guid: fc6f3424666dfda45bcbadbbf42e5968, type: 3}
-  poolSize: 20
+  - {fileID: 3718286561741085233, guid: 73afb71dcbc18d546af639a6b10e2a5e, type: 3}
+  - {fileID: 4755153251823795945, guid: 87e3842193d9bd24aa2b766118974adb, type: 3}
+  - {fileID: 2326087782840960874, guid: 89c7acc710905a446a47a93aff98e7f7, type: 3}
+  - {fileID: 3955637367084747563, guid: db229ea706ebb15489fe20e12f213805, type: 3}
+  - {fileID: 4491742982471121312, guid: 5d86c4c330342fb4780391e60e56107f, type: 3}
+  poolSize: 30
 --- !u!4 &296872383
 Transform:
   m_ObjectHideFlags: 0
@@ -899,8 +901,12 @@ MonoBehaviour:
   obstaclePool: {fileID: 296872382}
   player: {fileID: 543197489}
   spawnInterval: 3
-  obstacleDistance: 50
+  obstacleDistance: 70
   initialObstacles: 10
+  xPositions:
+  - -31
+  - -6
+  - 19
 --- !u!4 &937594441
 Transform:
   m_ObjectHideFlags: 0
