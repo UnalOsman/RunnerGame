@@ -57,7 +57,6 @@ public class levelManager : MonoBehaviour
 
         
         List<float> availableXPositions = new List<float>(xPositions);
-        List<float> doorAvailableXPositions=new List<float>(doorXPositions);
         List<float> chosenXPositions=new List<float>();
 
         for (int i = 0;i < lineObstacleCount;i++)
@@ -76,41 +75,75 @@ public class levelManager : MonoBehaviour
             if (obstacle != null)
             {
                 float spawnZ = initial ? nextSpawnZ : player.position.z + obstacleDistance * initialObstacles;
-                Vector3 spawnPos = new Vector3(xPosition,obstacle.transform.position.y,spawnZ);
-                obstacle.transform.position = spawnPos;
-                obstacle.transform.rotation = Quaternion.identity;
-                obstacle.gameObject.SetActive(true);
-
-                if(obstacle.CompareTag("RampStart"))
+                
+                if (obstacle.CompareTag("RampStart"))
                 {
-                    GameObject rampStart = obstacle;
-                    rampStart.transform.position = new Vector3(xPosition, rampStart.transform.position.y, spawnZ);
-                    rampStart.transform.rotation=Quaternion.Euler(0,-180,0);
-                    rampStart.SetActive(true);
-
-
-                    GameObject blocks=obstaclePool.GetPoolObject();
-                    if (blocks != null)
-                    {
-                        blocks.transform.position = new Vector3(xPosition, blocks.transform.position.y, spawnZ + obstacleDistance / 2);
-                        blocks.transform.rotation = Quaternion.identity;
-                        blocks.gameObject.SetActive(true);
-                    }
-
-                    GameObject rampEnd=obstaclePool.GetPoolObject() ;
-
-                    if(rampEnd != null)
-                    {
-                        rampEnd.transform.position = new Vector3(xPosition, rampEnd.transform.position.y, spawnZ);
-                        rampEnd.transform.rotation=Quaternion.Euler(0,0,0);
-                        rampEnd.SetActive(true);
-                    }
+                    SpawnRampa(spawnZ);
+                }
+                else if(obstacle.CompareTag("DoorPrefab"))
+                {
+                    SpawnDoor(spawnZ);
+                }
+                else
+                {
+                    Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
+                    obstacle.transform.position = spawnPos;
+                    obstacle.transform.rotation = Quaternion.identity;
+                    obstacle.gameObject.SetActive(true);
                 }
             }
             else
             {
                 Debug.Log("No pooled object available");
             }
+        }
+    }
+
+
+    private void SpawnRampa(float spawnZ)
+    {
+        List<float> chosenRampXPositions = new List<float>(rampaXPositions);
+        float rampX = chosenRampXPositions[Random.Range(0, chosenRampXPositions.Count)];
+
+        GameObject rampStart=obstaclePool.GetPoolObject();
+
+        if(rampStart != null)
+        {
+            rampStart.transform.position = new Vector3(rampX, rampStart.transform.position.y, spawnZ);
+            rampStart.transform.rotation=Quaternion.Euler(0,-180,0);
+            rampStart.gameObject.SetActive(true);
+        }
+
+
+        GameObject blocks = obstaclePool.GetPoolObject();
+        if (blocks != null)
+        {
+            blocks.transform.position = new Vector3(rampX, blocks.transform.position.y, spawnZ + obstacleDistance / 2);
+            blocks.transform.rotation = Quaternion.identity;
+            blocks.SetActive(true);
+        }
+
+        GameObject rampEnd = obstaclePool.GetPoolObject();
+        if (rampEnd != null)
+        {
+            rampEnd.transform.position = new Vector3(rampX, rampEnd.transform.position.y, spawnZ + obstacleDistance + rampEnd.transform.position.z);
+            rampEnd.transform.rotation = Quaternion.Euler(0, 0, 0);
+            rampEnd.SetActive(true);
+        }
+    }
+
+
+    private void SpawnDoor(float spawnZ)
+    {
+        List<float> chosenDoorXPositions = new List<float>(doorXPositions);
+        float doorX = chosenDoorXPositions[Random.Range(0, chosenDoorXPositions.Count)];
+
+        GameObject door = obstaclePool.GetPoolObject();
+        if (door != null)
+        {
+            door.transform.position = new Vector3(doorX, door.transform.position.y, spawnZ);
+            door.transform.rotation = Quaternion.identity;
+            door.SetActive(true);
         }
     }
 

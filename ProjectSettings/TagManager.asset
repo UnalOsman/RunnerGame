@@ -6,7 +6,9 @@ TagManager:
   tags:
   - Ground
   - RampStart
+  - DoorPrefab
   - WalkBlock
+  - SpawnPlane
   layers:
   - Default
   - TransparentFX
