@@ -11,7 +11,9 @@ public class levelManager : MonoBehaviour
     public float spawnInterval = 2f;
     public float obstacleDistance = 5f;
     public int initialObstacles = 10;
-    public float[] xPositions = new float[] { -31f, -6f, 19f };
+    public float[] xPositions = new float[] { -25f, 0f, 25f };
+    public float[] doorXPositions = new float[] { -32.8f, -7.8f, 17.2f };
+    public float[] rampaXPositions = new float[] { -17.2f, 7.8f, 32.8f };
 
     private float nextSpawnZ;
 
@@ -55,6 +57,7 @@ public class levelManager : MonoBehaviour
 
         
         List<float> availableXPositions = new List<float>(xPositions);
+        List<float> doorAvailableXPositions=new List<float>(doorXPositions);
         List<float> chosenXPositions=new List<float>();
 
         for (int i = 0;i < lineObstacleCount;i++)

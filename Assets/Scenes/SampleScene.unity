@@ -201,6 +201,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4541706494329302, guid: f11fc98cf1e8d5547a9b2ec85cc9c664, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.61
+      objectReference: {fileID: 0}
     - target: {fileID: 23999360488985814, guid: f11fc98cf1e8d5547a9b2ec85cc9c664,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -907,6 +911,14 @@ MonoBehaviour:
   - -31
   - -6
   - 19
+  doorXPositions:
+  - -32.8
+  - -7.8
+  - 17.2
+  rampaXPositions:
+  - -17.2
+  - 7.8
+  - 32.8
 --- !u!4 &937594441
 Transform:
   m_ObjectHideFlags: 0
