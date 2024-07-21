@@ -9,6 +9,7 @@ TagManager:
   - DoorPrefab
   - WalkBlock
   - SpawnPlane
+  - RampEnd
   layers:
   - Default
   - TransparentFX

@@ -16,7 +16,7 @@ public class levelManager : MonoBehaviour
     public float[] rampaXPositions = new float[] { -17.2f, 7.8f, 32.8f };
 
     private float nextSpawnZ;
-
+    private HashSet<Vector3> usedPositions = new HashSet<Vector3>();
 
     private void Start()
     {
@@ -75,22 +75,29 @@ public class levelManager : MonoBehaviour
             if (obstacle != null)
             {
                 float spawnZ = initial ? nextSpawnZ : player.position.z + obstacleDistance * initialObstacles;
+                Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
+
+                if(!usedPositions.Contains(spawnPos))
+                {
+                    usedPositions.Add(spawnPos);
+
+                    if (obstacle.CompareTag("RampStart"))
+                    {
+                        SpawnRampa(spawnZ);
+                    }
+                    else if (obstacle.CompareTag("DoorPrefab"))
+                    {
+                        SpawnDoor(spawnPos);
+                    }
+                    else if (obstacle.CompareTag("Untagged"))
+                    {
+
+                        obstacle.transform.position = spawnPos;
+                        obstacle.transform.rotation = Quaternion.identity;
+                        obstacle.gameObject.SetActive(true);
+                    }
+                }
                 
-                if (obstacle.CompareTag("RampStart"))
-                {
-                    SpawnRampa(spawnZ);
-                }
-                else if(obstacle.CompareTag("DoorPrefab"))
-                {
-                    SpawnDoor(spawnZ);
-                }
-                else
-                {
-                    Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
-                    obstacle.transform.position = spawnPos;
-                    obstacle.transform.rotation = Quaternion.identity;
-                    obstacle.gameObject.SetActive(true);
-                }
             }
             else
             {
@@ -100,14 +107,13 @@ public class levelManager : MonoBehaviour
     }
 
 
-    private void SpawnRampa(float spawnZ)
+    private void SpawnRampa( float spawnZ)
     {
         List<float> chosenRampXPositions = new List<float>(rampaXPositions);
         float rampX = chosenRampXPositions[Random.Range(0, chosenRampXPositions.Count)];
 
-        GameObject rampStart=obstaclePool.GetPoolObject();
-
-        if(rampStart != null)
+        GameObject rampStart = obstaclePool.GetPoolObject();
+        if(rampStart != null && rampStart.CompareTag("RampStart"))
         {
             rampStart.transform.position = new Vector3(rampX, rampStart.transform.position.y, spawnZ);
             rampStart.transform.rotation=Quaternion.Euler(0,-180,0);
@@ -116,34 +122,42 @@ public class levelManager : MonoBehaviour
 
 
         GameObject blocks = obstaclePool.GetPoolObject();
-        if (blocks != null)
+        if (blocks != null && blocks.CompareTag("WalkBlock"))
         {
-            blocks.transform.position = new Vector3(rampX, blocks.transform.position.y, spawnZ + obstacleDistance / 2);
+            blocks.transform.position = new Vector3(rampX, blocks.transform.position.y, spawnZ + obstacleDistance);
             blocks.transform.rotation = Quaternion.identity;
             blocks.SetActive(true);
         }
 
-        GameObject rampEnd = obstaclePool.GetPoolObject();
-        if (rampEnd != null)
+        GameObject rampEnd= obstaclePool.GetPoolObject();
+        if (rampEnd != null && rampEnd.CompareTag("RampEnd"))
         {
-            rampEnd.transform.position = new Vector3(rampX, rampEnd.transform.position.y, spawnZ + obstacleDistance + rampEnd.transform.position.z);
+            rampEnd.transform.position = new Vector3(rampX, rampEnd.transform.position.y, spawnZ + obstacleDistance*2);
             rampEnd.transform.rotation = Quaternion.Euler(0, 0, 0);
             rampEnd.SetActive(true);
         }
+
+
+        usedPositions.Add(new Vector3(rampX,rampStart.transform.position.y,spawnZ));
+        usedPositions.Add(new Vector3(rampX,blocks.transform.position.y,spawnZ+obstacleDistance));
+        usedPositions.Add(new Vector3(rampX,rampEnd.transform.position.y,spawnZ+obstacleDistance*2));
     }
 
 
-    private void SpawnDoor(float spawnZ)
+    private void SpawnDoor(Vector3 spawnPos)
     {
         List<float> chosenDoorXPositions = new List<float>(doorXPositions);
         float doorX = chosenDoorXPositions[Random.Range(0, chosenDoorXPositions.Count)];
 
         GameObject door = obstaclePool.GetPoolObject();
-        if (door != null)
+        if (door != null && door.CompareTag("DoorPrefab"))
         {
-            door.transform.position = new Vector3(doorX, door.transform.position.y, spawnZ);
+            spawnPos.x = doorX;
+            door.transform.position = spawnPos;
             door.transform.rotation = Quaternion.identity;
             door.SetActive(true);
+
+            usedPositions.Add(spawnPos);
         }
     }
 
