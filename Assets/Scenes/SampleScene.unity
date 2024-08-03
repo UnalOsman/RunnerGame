@@ -260,6 +260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 296872383}
+  - component: {fileID: 296872384}
   m_Layer: 0
   m_Name: ObjectPool
   m_TagString: Untagged
@@ -282,6 +283,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &296872384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296872381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5215ee10d9968054494d4dae6b7f16df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePrefabs:
+  - {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
+  - {fileID: 7155528375187303619, guid: d58a52932390caf4fa06cee47abd0b90, type: 3}
+  - {fileID: 3718286561741085233, guid: 73afb71dcbc18d546af639a6b10e2a5e, type: 3}
+  - {fileID: 4755153251823795945, guid: 87e3842193d9bd24aa2b766118974adb, type: 3}
+  - {fileID: 2326087782840960874, guid: 89c7acc710905a446a47a93aff98e7f7, type: 3}
+  - {fileID: 3955637367084747563, guid: db229ea706ebb15489fe20e12f213805, type: 3}
+  - {fileID: 1771384912537754995, guid: cbd07c4cfc1f01340959cfa0d63eb2cd, type: 3}
+  - {fileID: 4491742982471121312, guid: 5d86c4c330342fb4780391e60e56107f, type: 3}
+  poolSize: 10
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,6 +818,59 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1488835895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1488835897}
+  - component: {fileID: 1488835896}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1488835896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488835895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b96320b1a7b9b14fbdf5539c09d2920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePool: {fileID: 296872384}
+  player: {fileID: 543197489}
+  spawnInterval: 2
+  obstacleDistance: 50
+  initialObstacles: 10
+  xPositions:
+  - -25
+  - 0
+  - 25
+--- !u!4 &1488835897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488835895}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -57.8582, y: 16.24179, z: 137.06859}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2009,3 +2085,4 @@ SceneRoots:
   - {fileID: 1649015381}
   - {fileID: 607080840}
   - {fileID: 712093631}
+  - {fileID: 1488835897}
