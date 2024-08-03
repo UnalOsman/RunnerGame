@@ -72,18 +72,19 @@ public class playerMovement : MonoBehaviour
             StartCoroutine(Slide());
         }
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 3f);
-
+        /*
         if (hitPoints <= 0)
         {
             Die();
         }
+        */
     }
 
     private void FixedUpdate()
     {
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speed);
     }
-
+    /*
     public void HitObstacle()
     {
         if (!isInvisible)
@@ -93,6 +94,7 @@ public class playerMovement : MonoBehaviour
             StartCoroutine(TemporaryInvisible());
         }
     }
+    */
 
     void MoveLeft()
     {
@@ -132,7 +134,7 @@ public class playerMovement : MonoBehaviour
         animator.SetBool("IsSliding", false);
         isSliding = false;
     }
-
+/*
     private IEnumerator Blink()
     {
         Renderer renderer = GetComponentInChildren<Renderer>();
@@ -164,7 +166,7 @@ public class playerMovement : MonoBehaviour
     {
         Debug.Log("öldük");
     }
-
+*/
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
