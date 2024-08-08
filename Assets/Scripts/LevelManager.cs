@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(SpawnObstacles());
     }
 
+
     private void CreateInitialObstacles()
     {
         for (int i = 0; i < initialObstacles; i++)
@@ -34,20 +35,22 @@ public class LevelManager : MonoBehaviour
     {
         while (true)
         {
-            for (int i = 0; i < 10; i++)
+            if(Time.time > 10f)
             {
-                if (player.position.z >= nextSpawnZ - 2 * obstacleDistance)
+                if (nextSpawnZ < (player.position.z + obstacleDistance) * 2f)
                 {
                     SpawnObstacle(false);
-                    nextSpawnZ += player.transform.position.z + obstacleDistance;
+                    nextSpawnZ += obstacleDistance;
                     Debug.Log("SpawnObstacles ilk if koþulu çalýþtý." + nextSpawnZ);
                 }
             }
+            
+            
 
 
             for (int i = activeObstacles.Count - 1; i >= 0; i--)
             {
-                if (activeObstacles[i].transform.position.z < player.position.z - 10f)
+                if (activeObstacles[i].transform.position.z < player.position.z - 20f)
                 {
                     obstaclePool.ReturnPoolObject(activeObstacles[i]);
                     activeObstacles.RemoveAt(i);
@@ -79,7 +82,7 @@ public class LevelManager : MonoBehaviour
             GameObject obstacle = obstaclePool.GetPoolObject();
             if (obstacle != null)
             {
-                float spawnZ = initial ? nextSpawnZ + 80 : nextSpawnZ + obstacleDistance;
+                float spawnZ = initial ? nextSpawnZ + 80 : nextSpawnZ;
                 Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
 
                 obstacle.transform.position = spawnPos;

@@ -298,7 +298,7 @@ MonoBehaviour:
   obstaclePrefabs:
   - {fileID: 3718286561741085233, guid: 73afb71dcbc18d546af639a6b10e2a5e, type: 3}
   - {fileID: 4755153251823795945, guid: 87e3842193d9bd24aa2b766118974adb, type: 3}
-  poolSize: 25
+  poolSize: 20
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,7 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclePool: {fileID: 296872384}
   player: {fileID: 543197489}
-  spawnInterval: 0.2
+  spawnInterval: 0.5
   obstacleDistance: 60
   initialObstacles: 15
   xPositions:
