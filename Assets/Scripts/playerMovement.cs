@@ -19,7 +19,7 @@ public class playerMovement : MonoBehaviour
 
     public int hitPoints = 3;
     public float invisibleDuration = 2f;
-    private bool isInvisible = false;
+    //private bool isInvisible = false;
 
     void Start()
     {

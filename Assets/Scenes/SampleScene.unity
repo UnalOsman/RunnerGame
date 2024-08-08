@@ -296,15 +296,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefabs:
-  - {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
-  - {fileID: 7155528375187303619, guid: d58a52932390caf4fa06cee47abd0b90, type: 3}
   - {fileID: 3718286561741085233, guid: 73afb71dcbc18d546af639a6b10e2a5e, type: 3}
   - {fileID: 4755153251823795945, guid: 87e3842193d9bd24aa2b766118974adb, type: 3}
-  - {fileID: 2326087782840960874, guid: 89c7acc710905a446a47a93aff98e7f7, type: 3}
-  - {fileID: 3955637367084747563, guid: db229ea706ebb15489fe20e12f213805, type: 3}
-  - {fileID: 1771384912537754995, guid: cbd07c4cfc1f01340959cfa0d63eb2cd, type: 3}
-  - {fileID: 4491742982471121312, guid: 5d86c4c330342fb4780391e60e56107f, type: 3}
-  poolSize: 10
+  poolSize: 25
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 120
   slideDuration: 1
-  speed: 50
+  speed: 70
   slideSpeed: 25
   hitPoints: 3
   invisibleDuration: 2
@@ -854,9 +848,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclePool: {fileID: 296872384}
   player: {fileID: 543197489}
-  spawnInterval: 2
-  obstacleDistance: 50
-  initialObstacles: 10
+  spawnInterval: 0.2
+  obstacleDistance: 60
+  initialObstacles: 15
   xPositions:
   - -25
   - 0
