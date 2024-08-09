@@ -35,17 +35,15 @@ public class LevelManager : MonoBehaviour
     {
         while (true)
         {
-            if(Time.time > 10f)
+
+            if (player.position.z < player.position.z + obstacleDistance*2f )//burda kaldýk,math fonksiyonu kullanalým.
             {
-                if (nextSpawnZ < (player.position.z + obstacleDistance) * 2f)
-                {
-                    SpawnObstacle(false);
-                    nextSpawnZ += obstacleDistance;
-                    Debug.Log("SpawnObstacles ilk if koþulu çalýþtý." + nextSpawnZ);
-                }
+                //if (nextSpawnZ < (player.position.z) * 1.5f)
+                SpawnObstacle(false);
+                nextSpawnZ += obstacleDistance;
             }
-            
-            
+
+
 
 
             for (int i = activeObstacles.Count - 1; i >= 0; i--)
@@ -54,7 +52,6 @@ public class LevelManager : MonoBehaviour
                 {
                     obstaclePool.ReturnPoolObject(activeObstacles[i]);
                     activeObstacles.RemoveAt(i);
-                    Debug.Log("SpawnObstacles ikinci if koþulu çalýþtý." + nextSpawnZ);
                 }
             }
 
