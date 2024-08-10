@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     public float spawnInterval = 2f;
     public float obstacleDistance = 5f;
     public int initialObstacles = 10;
+    public float spawnDistance = 800f;
     public float[] xPositions = new float[] { -25f, 0f, 25f };
 
     private float nextSpawnZ;
@@ -36,12 +37,13 @@ public class LevelManager : MonoBehaviour
         while (true)
         {
 
-            if (player.position.z < player.position.z + obstacleDistance*2f )//burda kaldýk,math fonksiyonu kullanalým.
+            if (player.position.z <= nextSpawnZ + spawnDistance)
             {
-                //if (nextSpawnZ < (player.position.z) * 1.5f)
-                SpawnObstacle(false);
                 nextSpawnZ += obstacleDistance;
+                SpawnObstacle(false);
+                Mathf.Max(nextSpawnZ,player.position.z + spawnDistance);
             }
+
 
 
 
@@ -79,7 +81,7 @@ public class LevelManager : MonoBehaviour
             GameObject obstacle = obstaclePool.GetPoolObject();
             if (obstacle != null)
             {
-                float spawnZ = initial ? nextSpawnZ + 80 : nextSpawnZ;
+                float spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
                 Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
 
                 obstacle.transform.position = spawnPos;
@@ -87,7 +89,7 @@ public class LevelManager : MonoBehaviour
                 obstacle.SetActive(true);
 
                 activeObstacles.Add(obstacle);
-                availableXPositions.Add(xPosition);
+                //availableXPositions.Add(xPosition);
             }
         }
     }
