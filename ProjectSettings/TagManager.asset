@@ -6,10 +6,11 @@ TagManager:
   tags:
   - Ground
   - RampStart
-  - DoorPrefab
   - WalkBlock
   - SpawnPlane
   - RampEnd
+  - Obstacle
+  - Block
   layers:
   - Default
   - TransparentFX

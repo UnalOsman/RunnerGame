@@ -81,12 +81,35 @@ public class LevelManager : MonoBehaviour
             GameObject obstacle = obstaclePool.GetPoolObject();
             if (obstacle != null)
             {
-                float spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
-                Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
+                if(obstacle.CompareTag("Obstacle"))
+                {
+                    float spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
+                    Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
 
-                obstacle.transform.position = spawnPos;
-                obstacle.transform.rotation = Quaternion.identity;
-                obstacle.SetActive(true);
+                    obstacle.transform.position = spawnPos;
+                    obstacle.transform.rotation = Quaternion.identity;
+                    obstacle.SetActive(true);
+                }
+                else if(obstacle.CompareTag("Block"))
+                {
+                    float spawnZ=initial ? nextSpawnZ + obstacleDistance * 3 :nextSpawnZ + obstacleDistance * 2;
+                    Vector3 spawnPos = new Vector3(xPosition,obstacle.transform.position.y, spawnZ);
+
+                    obstacle.transform.position = spawnPos;
+                    obstacle.transform.rotation= Quaternion.identity;
+                    obstacle.SetActive(true);
+                }
+                else if(obstacle.CompareTag("WalkBlock"))
+                {
+                    float spawnZ = initial ? nextSpawnZ + obstacleDistance * 5 : nextSpawnZ + obstacleDistance * 4;
+                    Vector3 spawnPos = new Vector3(xPosition,obstacle.transform.position.y,spawnZ);
+
+                    obstacle.transform.position = spawnPos;
+                    obstacle.transform.rotation=Quaternion.identity;
+                    obstacle.SetActive(true);
+                }
+
+                
 
                 activeObstacles.Add(obstacle);
                 //availableXPositions.Add(xPosition);

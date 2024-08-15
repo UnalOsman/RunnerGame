@@ -134,39 +134,48 @@ public class playerMovement : MonoBehaviour
         animator.SetBool("IsSliding", false);
         isSliding = false;
     }
-/*
-    private IEnumerator Blink()
-    {
-        Renderer renderer = GetComponentInChildren<Renderer>();
-
-        if(renderer != null)
+    /*
+        private IEnumerator Blink()
         {
-            for (int i = 0; i < 10 ; i++)
+            Renderer renderer = GetComponentInChildren<Renderer>();
+
+            if(renderer != null)
             {
-                renderer.enabled = !renderer.enabled;
+                for (int i = 0; i < 10 ; i++)
+                {
+                    renderer.enabled = !renderer.enabled;
 
-                yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(0.1f);
+                }
             }
+            else
+            {
+                Debug.Log("Renderer bulunamadý!");
+            }
+            renderer.enabled = true;
         }
-        else
+
+        private IEnumerator TemporaryInvisible()
         {
-            Debug.Log("Renderer bulunamadý!");
+            isInvisible = true;
+            yield return new WaitForSeconds(invisibleDuration);
+            isInvisible = false;
         }
-        renderer.enabled = true;
+
+        private void Die()
+        {
+            Debug.Log("öldük");
+        }
+    */
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Obstacle") || other.CompareTag("Block"))
+        {
+            Debug.LogError("Öldük");
+        }
     }
 
-    private IEnumerator TemporaryInvisible()
-    {
-        isInvisible = true;
-        yield return new WaitForSeconds(invisibleDuration);
-        isInvisible = false;
-    }
-
-    private void Die()
-    {
-        Debug.Log("öldük");
-    }
-*/
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

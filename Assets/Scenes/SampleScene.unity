@@ -430,7 +430,11 @@ MonoBehaviour:
   obstaclePrefabs:
   - {fileID: 3718286561741085233, guid: 73afb71dcbc18d546af639a6b10e2a5e, type: 3}
   - {fileID: 4755153251823795945, guid: 87e3842193d9bd24aa2b766118974adb, type: 3}
-  poolSize: 12
+  - {fileID: 3374615075175997280, guid: a75cfab85d83e71449b106c5d73c0e15, type: 3}
+  - {fileID: 7314566790499394082, guid: b583b61c1634e984fb2c61452b190175, type: 3}
+  - {fileID: 3461526508399205974, guid: 12e5f9519454b9b4f83a27cdd48d91c5, type: 3}
+  - {fileID: 281905410259738222, guid: 7521e2a57fb87b44f87bc3d738db3ad0, type: 3}
+  poolSize: 10
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
