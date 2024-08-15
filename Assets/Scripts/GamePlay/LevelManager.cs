@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Random = System.Random;
 
 public class LevelManager : MonoBehaviour
 {
@@ -60,10 +64,11 @@ public class LevelManager : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval);
         }
     }
-
+    
     void SpawnObstacle(bool initial)
     {
-        int lineObstacleCount = Random.Range(1, 3);
+        Random rand = new Random();
+        int lineObstacleCount = rand.Next(1,3);
 
         List<float> availableXPositions = new List<float>(xPositions);
         List<float> chosenXPositions = new List<float>();
@@ -71,7 +76,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < lineObstacleCount; i++)
         {
             if (availableXPositions.Count == 0) break;
-            float randomX = availableXPositions[Random.Range(0, availableXPositions.Count)];
+            float randomX = availableXPositions[rand.Next(0, availableXPositions.Count)];
             chosenXPositions.Add(randomX);
             availableXPositions.Remove(randomX);
         }
@@ -81,35 +86,33 @@ public class LevelManager : MonoBehaviour
             GameObject obstacle = obstaclePool.GetPoolObject();
             if (obstacle != null)
             {
+
+                float zScale=obstacle.transform.localScale.z;
+                float spawnZ = nextSpawnZ;
+
                 if(obstacle.CompareTag("Obstacle"))
                 {
-                    float spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
-                    Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
-
-                    obstacle.transform.position = spawnPos;
-                    obstacle.transform.rotation = Quaternion.identity;
-                    obstacle.SetActive(true);
+                    spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
                 }
                 else if(obstacle.CompareTag("Block"))
                 {
-                    float spawnZ=initial ? nextSpawnZ + obstacleDistance * 3 :nextSpawnZ + obstacleDistance * 2;
-                    Vector3 spawnPos = new Vector3(xPosition,obstacle.transform.position.y, spawnZ);
-
-                    obstacle.transform.position = spawnPos;
-                    obstacle.transform.rotation= Quaternion.identity;
-                    obstacle.SetActive(true);
+                    spawnZ=initial ? nextSpawnZ + obstacleDistance * 3 :nextSpawnZ + obstacleDistance * 2;
                 }
                 else if(obstacle.CompareTag("WalkBlock"))
                 {
-                    float spawnZ = initial ? nextSpawnZ + obstacleDistance * 5 : nextSpawnZ + obstacleDistance * 4;
-                    Vector3 spawnPos = new Vector3(xPosition,obstacle.transform.position.y,spawnZ);
-
-                    obstacle.transform.position = spawnPos;
-                    obstacle.transform.rotation=Quaternion.identity;
-                    obstacle.SetActive(true);
+                   spawnZ = initial ? nextSpawnZ + obstacleDistance * 5 : nextSpawnZ + obstacleDistance * 4;
                 }
 
-                
+                if (zScale >= obstacleDistance * 3)
+                {
+                    nextSpawnZ += zScale + obstacleDistance;
+                }
+
+                Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
+
+                obstacle.transform.position = spawnPos;
+                obstacle.transform.rotation = Quaternion.identity;
+                obstacle.SetActive(true);
 
                 activeObstacles.Add(obstacle);
                 //availableXPositions.Add(xPosition);

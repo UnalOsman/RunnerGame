@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 143119663364687386}
   m_Layer: 0
   m_Name: BlockPrefab
-  m_TagString: WalkBlock
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 5734412635802551046}
   m_Layer: 0
   m_Name: rampaPrefab Variant
-  m_TagString: RampStart
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,10 +256,10 @@ GameObject:
   - component: {fileID: 4879999913333172587}
   - component: {fileID: 222958760620232215}
   - component: {fileID: 3789619054464367611}
-  - component: {fileID: 7269877132289754118}
+  - component: {fileID: 6671606700391350562}
   m_Layer: 0
   m_Name: rampaEndPrefab Variant Variant (1)
-  m_TagString: RampEnd
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -329,7 +329,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7269877132289754118
+--- !u!64 &6671606700391350562
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
