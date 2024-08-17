@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
             for (int i = activeObstacles.Count - 1; i >= 0; i--)
             {
-                if (activeObstacles[i].transform.position.z < player.position.z - 20f)
+                if (activeObstacles[i].transform.position.z < player.position.z - 50f)
                 {
                     obstaclePool.ReturnPoolObject(activeObstacles[i]);
                     activeObstacles.RemoveAt(i);
@@ -81,43 +81,54 @@ public class LevelManager : MonoBehaviour
             availableXPositions.Remove(randomX);
         }
 
-        foreach (float xPosition in chosenXPositions)
+        GameObject obstacle = obstaclePool.GetPoolObject();
+
+        if (obstacle.transform.localScale.z <= 20)
         {
-            GameObject obstacle = obstaclePool.GetPoolObject();
-            if (obstacle != null)
+            foreach (float xPosition in chosenXPositions)
             {
-
-                float zScale=obstacle.transform.localScale.z;
-                float spawnZ = nextSpawnZ;
-
-                if(obstacle.CompareTag("Obstacle"))
+                
+                if (obstacle != null)
                 {
-                    spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
-                }
-                else if(obstacle.CompareTag("Block"))
-                {
-                    spawnZ=initial ? nextSpawnZ + obstacleDistance * 3 :nextSpawnZ + obstacleDistance * 2;
-                }
-                else if(obstacle.CompareTag("WalkBlock"))
-                {
-                   spawnZ = initial ? nextSpawnZ + obstacleDistance * 5 : nextSpawnZ + obstacleDistance * 4;
-                }
+                    bool canSpawn = true;
+                    float spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
 
-                if (zScale >= obstacleDistance * 3)
-                {
-                    nextSpawnZ += zScale + obstacleDistance;
+                    foreach (GameObject activeObstacle in activeObstacles)
+                    {
+                        float distance = Mathf.Abs(activeObstacle.transform.position.z - spawnZ);
+                        if (distance < obstacleDistance + obstacle.transform.localScale.z)
+                        {
+                            canSpawn = false;
+                            break;
+                        }
+                    }
+
+                    if (obstacle.CompareTag("Obstacle"))
+                    {
+                        spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
+                        spawnZ = canSpawn ? spawnZ:spawnZ + obstacleDistance*5f;
+                    }
+                    else if (obstacle.CompareTag("Block"))
+                    {
+                        spawnZ = initial ? nextSpawnZ + obstacleDistance * 3 : nextSpawnZ + obstacleDistance * 2;
+                    }
+                    else if (obstacle.CompareTag("WalkBlock"))
+                    {
+                        spawnZ = initial ? nextSpawnZ + obstacleDistance * 5 : nextSpawnZ + obstacleDistance * 4;
+                    }
+
+                    Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
+
+                    obstacle.transform.position = spawnPos;
+                    obstacle.transform.rotation = Quaternion.identity;
+                    obstacle.SetActive(true);
+
+                    activeObstacles.Add(obstacle);
+                    //availableXPositions.Add(xPosition);
                 }
-
-                Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
-
-                obstacle.transform.position = spawnPos;
-                obstacle.transform.rotation = Quaternion.identity;
-                obstacle.SetActive(true);
-
-                activeObstacles.Add(obstacle);
-                //availableXPositions.Add(xPosition);
             }
         }
+        
     }
 
 }

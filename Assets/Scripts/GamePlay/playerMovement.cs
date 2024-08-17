@@ -117,7 +117,7 @@ public class playerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (rb.velocity.y == 0f && !isJumping)
+        if (rb.velocity.y == 0f && !isJumping || gameObject.CompareTag("WalkBlock"))
         {
             isJumping = true;
             animator.SetTrigger("IsJumping");
