@@ -90,31 +90,46 @@ public class LevelManager : MonoBehaviour
                 
                 if (obstacle != null)
                 {
+                    GameObject olusanObje=FindClosestObstacle(obstacle) ;
                     bool canSpawn = true;
                     float spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
 
-                    foreach (GameObject activeObstacle in activeObstacles)
+                    if (obstacle.CompareTag("Obstacle"))
                     {
-                        float distance = Mathf.Abs(activeObstacle.transform.position.z - spawnZ);
-                        if (distance < obstacleDistance + obstacle.transform.localScale.z)
+
+                        float distance = Mathf.Abs(olusanObje.transform.position.z - obstacle.transform.position.z);
+                        float distanceNext = Mathf.Abs(obstacle.transform.position.z - spawnZ);
+                        if (distance < 2*obstacleDistance + obstacle.transform.localScale.z && distanceNext < obstacleDistance + obstacle.transform.localScale.z)
                         {
                             canSpawn = false;
                             break;
                         }
-                    }
-
-                    if (obstacle.CompareTag("Obstacle"))
-                    {
                         spawnZ = initial ? nextSpawnZ + obstacleDistance : nextSpawnZ;
-                        spawnZ = canSpawn ? spawnZ:spawnZ + obstacleDistance*5f;
+                        spawnZ = canSpawn ? spawnZ:spawnZ + obstacleDistance*2f;
                     }
                     else if (obstacle.CompareTag("Block"))
                     {
+                        float distance = Mathf.Abs(olusanObje.transform.position.z - obstacle.transform.position.z);
+                        float distanceNext = Mathf.Abs(obstacle.transform.position.z - spawnZ);
+                        if (distance < 2 * obstacleDistance + obstacle.transform.localScale.z && distanceNext < 2 * obstacleDistance + obstacle.transform.localScale.z)
+                        {
+                            canSpawn = false;
+                            break;
+                        }
                         spawnZ = initial ? nextSpawnZ + obstacleDistance * 3 : nextSpawnZ + obstacleDistance * 2;
+                        spawnZ = canSpawn ? spawnZ : spawnZ + obstacleDistance * 2f;
                     }
                     else if (obstacle.CompareTag("WalkBlock"))
                     {
+                        float distance = Mathf.Abs(olusanObje.transform.position.z - obstacle.transform.position.z);
+                        float distanceNext = Mathf.Abs(obstacle.transform.position.z - spawnZ);
+                        if (distance < 3 * obstacleDistance + obstacle.transform.localScale.z && distanceNext < 3 * obstacleDistance + obstacle.transform.localScale.z)
+                        {
+                            canSpawn = false;
+                            break;
+                        }
                         spawnZ = initial ? nextSpawnZ + obstacleDistance * 5 : nextSpawnZ + obstacleDistance * 4;
+                        spawnZ=canSpawn ? spawnZ :spawnZ + obstacleDistance * 5;
                     }
 
                     Vector3 spawnPos = new Vector3(xPosition, obstacle.transform.position.y, spawnZ);
@@ -129,6 +144,28 @@ public class LevelManager : MonoBehaviour
             }
         }
         
+    }
+
+    GameObject FindClosestObstacle(GameObject currentObstacle)
+    {
+        GameObject closestObstacle= null;
+
+        float closestDistance = float.PositiveInfinity;
+
+        foreach(GameObject obstacle in activeObstacles)
+        {
+            if (currentObstacle == obstacle) continue; // eðer eþitse döngüde kalan koda devam et.
+
+            float distance=Vector3.Distance(currentObstacle.transform.position, obstacle.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestObstacle = obstacle;
+            }
+        }
+
+        return closestObstacle;
     }
 
 }
