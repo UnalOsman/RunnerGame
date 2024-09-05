@@ -46,7 +46,7 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
-        rb.AddForce(Physics.gravity * gravityScale * Time.deltaTime, ForceMode.Acceleration);
+        
         targetPosition += Vector3.forward * speed * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.A) && !isWaiting)
         {
@@ -82,6 +82,7 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        rb.AddForce(Physics.gravity * gravityScale * Time.deltaTime, ForceMode.Acceleration);
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speed);
     }
     /*

@@ -143,6 +143,10 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+        else
+        {
+
+        }
         
     }
 
@@ -151,21 +155,29 @@ public class LevelManager : MonoBehaviour
         GameObject closestObstacle= null;
 
         float closestDistance = float.PositiveInfinity;
-
-        foreach(GameObject obstacle in activeObstacles)
+        if(activeObstacles.Contains(currentObstacle))
         {
-            if (currentObstacle == obstacle) continue; // eðer eþitse döngüde kalan koda devam et.
-
-            float distance=Vector3.Distance(currentObstacle.transform.position, obstacle.transform.position);
-
-            if (distance < closestDistance)
+            foreach (GameObject obstacle in activeObstacles)
             {
-                closestDistance = distance;
-                closestObstacle = obstacle;
-            }
-        }
+                if (currentObstacle == obstacle) continue; // eðer eþitse döngüde kalan koda devam et.
 
-        return closestObstacle;
+                float distance = Vector3.Distance(currentObstacle.transform.position, obstacle.transform.position);
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestObstacle = obstacle;
+                }
+            }
+            return closestObstacle;
+        }
+        else
+        {
+            return currentObstacle;
+        }
+        
+
+        
     }
 
 }
